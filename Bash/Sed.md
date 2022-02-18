@@ -18,13 +18,17 @@
 
 ## 주요 옵션
 
-### -n
+### -n : 특정 범위 만큼 파일 내용 출력
 
-### -s
+```bash
+sed -n '10p'
+```
 
-### -e
+### -f : 스크립트 파일 지정에 사용
 
-### -d
+### -e : 다중 편집을 가능하게 함
+
+## 주요 커맨드
 
 ## 예제로 알아보기
 
@@ -43,3 +47,4 @@ sed -e "s#\S*:##g" -e "s#\s\+#\n#g”
 
 - [https://jhnyang.tistory.com/287](https://jhnyang.tistory.com/287)
 - [https://wrkbr.tistory.com/291](https://wrkbr.tistory.com/291)
+- [https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=minki0127&logNo=220677180665](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=minki0127&logNo=220677180665)
