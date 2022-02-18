@@ -31,6 +31,7 @@
 <br>
 
 ## 주요 옵션
+
 ```
 # testfile
 microsoft
@@ -42,6 +43,7 @@ samsung
 samsung sds
 applepie
 ```
+위 testfile로 아래 예제들을 확인
 
 ### n : 자동 출력 생략
 ```bash
@@ -152,7 +154,7 @@ https://wrkbr.tistory.com/291
 ## 예제로 알아보기
 
 ```bash
-sed -e "s#\S*:##g" -e "s#\s\+#\n#g”
+(input stream) | **sed -e "s#\S*:##g" -e "s#\s\+#\n#g”**
 ```
 
 - e : execute 하는 스크립트 , 보통 두개이상의 표현식을 사용할때 사용
