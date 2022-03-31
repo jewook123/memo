@@ -1,4 +1,4 @@
-## 도커 설치하기 - 리눅스
+## 도커와 각종 컨테이너 설치해보기
 
 ### 설치 명령어
 ```curl -fsSL https://get.docker.com/ | sudo sh```
@@ -114,6 +114,47 @@ docker run -d -p 8080:80 \
 - 워드프레스의 DB와 연결하는 환경변수를 작성해야한다.
 - 앞서 MySQL과 마찬가지로 Docker hub에서 환경변수에 대한 설명이 있다.
    - https://hub.docker.com/_/wordpress
-- 
+- link 부분은 ```Docker network```라는 기능으로 대체되었다고 한다. 실제 사용은 X
+   - 위 ```WORDPRESS_DB_HOST=mysql``` 부분에서 ```mysql```이라는 별칭을 컨테이너와 연결해서 사용함
+### tensorflow 설치하기
+- 똑같은 작업이기때문에 생략한다.
+- https://subicura.com/2017/01/19/docker-guide-for-beginners-2.html#%EC%A0%95%EB%A6%AC 참고
+
+
+## 도커 기본 명령어
+### 컨테이너 목록확인하기
+```docker ps [OPTIONS]```
+- 옵션
+   - -a : stop한 것까지 보인다.
+   ```
+   컨테이너는 종료되어도 삭제되지 않고 남아있음
+   종료된 건 다시 시작할 수 있고 컨테이너의 읽기/쓰기 레이어는 그대로 존재함!
+   명시적으로 삭제를 하면 깔끔하게 컨테이너가 제거됨
+   ```
+   
+
+### 컨테이너 중지하기
+```docker stop [OPTIONS] CONTAINER [CONTAINER...]```
+
+### 컨테이너 제거하기
+```docker rm [OPTIONS] CONTAINER [CONTAINER...]```
+
+### 이미지 목록 확인하기
+```docker images [OPTIONS] [REPOSITORY[:TAG]]```
+
+### 이미지 다운로드 하기
+```docker pull [OPTIONS] NAME[:TAG|@DIGEST]```
+
+### 이미지 삭제하기
+```docker rmi [OPTIONS] IMAGE [IMAGE...]```
+   
+## 컨테이너 둘러보기
+### 컨테이너 로그보기
+```docker logs [OPTIONS] CONTAINER```
+
+### 컨테이너 명령어 실행하기
+```docker exec [OPTIONS] CONTAINER COMMAND [ARG...]```
+
+
 
 
