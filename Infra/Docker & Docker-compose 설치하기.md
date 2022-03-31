@@ -70,10 +70,12 @@ $ sudo usermod -aG docker $USER
     - 없다면 https://blog.naver.com/PostView.nhn?blogId=wideeyed&logNo=222079622746 를 참고해 진행한다.
       - sudo mkdir -p /etc/systemd/system/docker.service.d
       - sudo vi /etc/systemd/system/docker.service.d/http-proxy.conf
-        > [Service]
-        > Environment="HTTP_PROXY=http://proxy.example.com:80"
-        > Environment="HTTPS_PROXY=https://proxy.example.com:443"
-        > Environment="NO_PROXY=localhost,127.0.0.1"
+        ```
+        [Service]
+        Environment="HTTP_PROXY=http://proxy.example.com:80"
+        Environment="HTTPS_PROXY=https://proxy.example.com:443"
+        Environment="NO_PROXY=localhost,127.0.0.1"
+        ```
       - sudo systemctl daemon-reload
       - sudo systemctl restart docker
       - sudo systemctl show --property=Environment docker
