@@ -126,35 +126,64 @@ docker run -d -p 8080:80 \
 ```docker ps [OPTIONS]```
 - 옵션
    - -a : stop한 것까지 보인다.
-   ```
-   컨테이너는 종료되어도 삭제되지 않고 남아있음
-   종료된 건 다시 시작할 수 있고 컨테이너의 읽기/쓰기 레이어는 그대로 존재함!
-   명시적으로 삭제를 하면 깔끔하게 컨테이너가 제거됨
-   ```
+```
+**Tip)**
+컨테이너는 종료되어도 삭제되지 않고 남아있음
+종료된 건 다시 시작할 수 있고 컨테이너의 읽기/쓰기 레이어는 그대로 존재함!
+명시적으로 삭제를 하면 깔끔하게 컨테이너가 제거됨
+```
    
-
 ### 컨테이너 중지하기
 ```docker stop [OPTIONS] CONTAINER [CONTAINER...]```
 
+```
+**Tip)**
+Docker 컨테이너 ID는 64자리로 구성되는데
+앞에 몇글자만 입력해도 충분하다.
+```
+
 ### 컨테이너 제거하기
 ```docker rm [OPTIONS] CONTAINER [CONTAINER...]```
-
+- 컨테이너가 말끔히 삭제된다 호스트 OS에는 아무런 흔적도 남아있지 않아 시스템이 꼬일 걱정이 없다.
+```
+**Tip)**
+docker rm -v $(docker ps -a -q -f status=exited)
+위 명령어로 한번에 중지된 컨테이너들을 삭제할 수 있다.
+```
 ### 이미지 목록 확인하기
 ```docker images [OPTIONS] [REPOSITORY[:TAG]]```
+이미지가 너무 많이 쌓이면 용량을 차지하기 때문에 사용하지 않는 이미지는 지우는 것이 좋다.
 
 ### 이미지 다운로드 하기
 ```docker pull [OPTIONS] NAME[:TAG|@DIGEST]```
+- ```run```명령어를 입력하면 이미지가 없을 경우 자동으로 다운받으니 ```pull```은 언제쓸까?
+   - 최신버전으로 다시 다운을 받는 용도로 사용한다.
+   - 같은 태그이지만 업데이트가 된 경우 새로 받을 수 있다.
 
 ### 이미지 삭제하기
 ```docker rmi [OPTIONS] IMAGE [IMAGE...]```
-   
+- 단, 컨테이너가 실행중인 이미지는 삭제되지 않습니다.
+- 컨테이너는 이미지들의 레이어를 기반으로 실행중이므로 당연히 삭제할 수 없습니다.
+
 ## 컨테이너 둘러보기
 ### 컨테이너 로그보기
 ```docker logs [OPTIONS] CONTAINER```
+```-f```, ```--tail```옵션을 제일 많이 사용
+- -f : 실시간으로 로그 생성되는것 확인
+   ```docker logs -f ${WORDPRESS_CONTAINER_ID}```
+- -tail : 마지막 10줄만 출력하기 가능
+   ```docker logs --tail 10 ${WORDPRESS_CONTAINER_ID}```
+- 로그 더 자세히..
+   - 표준스트림 중 ```stdout```, ```stderr```를 수집해 출력
+   - 컨테이너 로그파일은 json 방식으로 어딘가에 저장됨
+   - 도커의 다양한 플러그인으로 json이 아닌 특정 로그 서비스에 스트림을 전달할 수 있음
+   - 로그가 많은 서비스라면 이 방식을 고려해야함
 
 ### 컨테이너 명령어 실행하기
 ```docker exec [OPTIONS] CONTAINER COMMAND [ARG...]```
 
+## 컨테이너 업데이트
 
+## Docker Compose
 
 
