@@ -59,24 +59,32 @@ $ sudo docker version
 ```
 $ sudo usermod -aG docker $USER
 ```
+### 에러 대응 
 - Docker Version시 Server쪽 에러로그가 뜬다면
   - 위 그룹 추가 후 로그아웃 후 다시 진행
 
-- proxy 설정
+- proxy 설정 오류가 뜬다면
   - docker server (daemon)이 실제로는 외부와 통신을 하게 된다.
   - 그렇기 때문에 이 daemon에 proxy를 설정해줘야한다.
   - ```sudo systemctl show --property=Environment docker``` 
     - 위 명령어를 통해서 Proxy 설정값이 먹혀있는지 확인해볼 수 있다.
-    - 없다면 https://blog.naver.com/PostView.nhn?blogId=wideeyed&logNo=222079622746 를 참고해 진행한다.
-      - sudo mkdir -p /etc/systemd/system/docker.service.d
-      - sudo vi /etc/systemd/system/docker.service.d/http-proxy.conf
-        ```
-        [Service]
-        Environment="HTTP_PROXY=http://proxy.example.com:80"
-        Environment="HTTPS_PROXY=https://proxy.example.com:443"
-        Environment="NO_PROXY=localhost,127.0.0.1"
-        ```
-      - sudo systemctl daemon-reload
-      - sudo systemctl restart docker
-      - sudo systemctl show --property=Environment docker
-        - Proxy 설정 된 것 다시 확인하기
+    - 안된다면 아래 명령어들을 진행한다.
+    - sudo mkdir -p /etc/systemd/system/docker.service.d
+    - sudo vi /etc/systemd/system/docker.service.d/http-proxy.conf
+      ```
+      [Service]
+      Environment="HTTP_PROXY=http://proxy.example.com:80"
+      Environment="HTTPS_PROXY=https://proxy.example.com:443"
+      Environment="NO_PROXY=localhost,127.0.0.1"
+      ```
+    - sudo systemctl daemon-reload
+    - sudo systemctl restart docker
+    - sudo systemctl show --property=Environment docker
+      - Proxy 설정 된 것 다시 확인하기
+    - [Reference : https://blog.naver.com/PostView.nhn?blogId=wideeyed&logNo=222079622746]
+- docker pull rate limit이 뜬다면
+  - ```anonymous```로는 pull에 한계 ```IP당 100회 / 6시간```를 정해두고 있다.
+  - 특히 Proxy 사업장 대부에서 호출을 할 경우, 사업장 내부의 모든 pull이 ```같은 IP```로 동작하기 때문에 엄청 일찍 하지않는다면 pull 하지 못하는 상황이 된다.
+    - https://subicura.com/k8s/2021/01/02/docker-hub-pull-limit/
+  - 해결책은 개인계정을 사용하면 ```계정당 200회 / 6시간```로 사용할 수 있다.
+  - ```docker login -u [ID]```    
