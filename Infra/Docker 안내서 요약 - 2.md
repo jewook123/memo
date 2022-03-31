@@ -152,7 +152,7 @@ docker rm -v $(docker ps -a -q -f status=exited)
 ```
 ### 이미지 목록 확인하기
 ```docker images [OPTIONS] [REPOSITORY[:TAG]]```
-이미지가 너무 많이 쌓이면 용량을 차지하기 때문에 사용하지 않는 이미지는 지우는 것이 좋다.
+- 이미지가 너무 많이 쌓이면 용량을 차지하기 때문에 사용하지 않는 이미지는 지우는 것이 좋다.
 
 ### 이미지 다운로드 하기
 ```docker pull [OPTIONS] NAME[:TAG|@DIGEST]```
