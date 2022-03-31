@@ -62,4 +62,19 @@ $ sudo usermod -aG docker $USER
 - Docker Version시 Server쪽 에러로그가 뜬다면
   - 위 그룹 추가 후 로그아웃 후 다시 진행
 
-
+- proxy 설정
+  - docker server (daemon)이 실제로는 외부와 통신을 하게 된다.
+  - 그렇기 때문에 이 daemon에 proxy를 설정해줘야한다.
+  - ```sudo systemctl show --property=Environment docker``` 
+    - 위 명령어를 통해서 Proxy 설정값이 먹혀있는지 확인해볼 수 있다.
+    - 없다면 https://blog.naver.com/PostView.nhn?blogId=wideeyed&logNo=222079622746 를 참고해 진행한다.
+      - sudo mkdir -p /etc/systemd/system/docker.service.d
+      - sudo vi /etc/systemd/system/docker.service.d/http-proxy.conf
+        > [Service]
+        > Environment="HTTP_PROXY=http://proxy.example.com:80"
+        > Environment="HTTPS_PROXY=https://proxy.example.com:443"
+        > Environment="NO_PROXY=localhost,127.0.0.1"
+      - sudo systemctl daemon-reload
+      - sudo systemctl restart docker
+      - sudo systemctl show --property=Environment docker
+        - Proxy 설정 된 것 다시 확인하기
