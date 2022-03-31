@@ -59,5 +59,7 @@ $ sudo docker version
 ```
 $ sudo usermod -aG docker $USER
 ```
-    
+- Docker Version시 Server쪽 에러로그가 뜬다면
+  - 위 그룹 추가 후 로그아웃 후 다시 진행
+
 
