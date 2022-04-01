@@ -214,22 +214,63 @@ docker rm -v $(docker ps -a -q -f status=exited)
       - ```/var/jenkins_home```으로 되어있다.
       - 이 부분과 호스트의 어떤 폴더를 연결한다고 가정했을때
       - 다른 인스턴스에서 저 폴더만 가지고 되는지 확인해보면 백업이 되는지 알수 있다.
-      - Jenkins 안에서는 docker를 사용하기 위해서는
-         - docker가 설치 되어있어야 함
-         - ```- /var/run/docker.sock:/var/run/docker.sock```가 같이 명세되어야 함
-            - [https://blog.dasomoli.org/tag/var-run-docker-sock/] 참고
-         - ```/var/run/docker.sock```은 어떤파일인가?
-            - docker daemon에게 명령을 내릴수 있는 인터페이스파일
-            - Docker client가 /var/run/docker.sock를 통해 daemon(Docker serve)에게 명령어를 전달하는것
-            - 외부의 Docker client도 저 파일에 접근할수 있다면 해당 Docker에 명령을 내릴수 있는것
-            - 결국 ```/var/run/docker.sock```만 공유하면 Local에 설치된 Docker를 컨테이너 내부에서 사용가능
-            - 또한 컨테이너 내부에 설치된 docker를 다른 컨테이너 내부에서 사용이 가능
-            - [https://medium.com/dtevangelist/docker-in-docker-fb54252e3188] 참고
-            - 따라서 로컬 Docker와 컨테이너 내부의 /var/run/docker.sock 를 공유한다는것은
-               - 컨테이너 내부에서 명령어를 치면 로컬에서 친것과 동일한 결과를 전달함
-               - 로컬 PC의 ```docker ps```와 동일
-
+   - Jenkins 안에서는 docker를 사용하기 위해서는 (Docker in Docker)
+      - docker가 설치 된 이미지여야 함 , (Jenkins이미지는 docker가 설치된듯?)
+      - ```- /var/run/docker.sock:/var/run/docker.sock```가 같이 명세되어야 함
+         - [https://blog.dasomoli.org/tag/var-run-docker-sock/] 참고
+      - ```/var/run/docker.sock```은 어떤파일인가?
+         - docker daemon에게 명령을 내릴수 있는 인터페이스파일
+         - Docker client가 /var/run/docker.sock를 통해 daemon(Docker serve)에게 명령어를 전달하는것
+         - 외부의 Docker client도 저 파일에 접근할수 있다면 해당 Docker에 명령을 내릴수 있는것
+         - 결국 ```/var/run/docker.sock```만 공유하면 Local에 설치된 Docker를 컨테이너 내부에서 사용가능
+         - 또한 컨테이너 내부에 설치된 docker를 다른 컨테이너 내부에서 사용이 가능
+         - [https://medium.com/dtevangelist/docker-in-docker-fb54252e3188] 참고
+         - 따라서 로컬 Docker와 컨테이너 내부의 /var/run/docker.sock 를 공유한다는것은
+            - 컨테이너 내부에서 명령어를 치면 로컬에서 친것과 동일한 결과를 전달함
+            - 로컬 PC의 ```docker ps```와 동일한 결과를 볼수 있음
+            ![로컬 PC와 동일](https://miro.medium.com/max/1400/1*tE8r3QuvnTg-AWGO0_cSoQ.png)
  
 ## Docker Compose
+- 위의 간단한 명령어들 보다 복잡한 설정을 추가하면 굉장히 복잡한 명령어를 가지게 된다.
+- 도커는 이를 쉽게 관리하기위해 YAML 방식의 설정파일을 이용한 Docker Compose라는 툴을 이용한다.
+```
+curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+# test
+docker-compose version
+```
+### Docker compose로 워드프레스 설치 명세하기
+```
+version: '2'
 
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: wordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
 
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     volumes:
+       - wp_data:/var/www/html
+     ports:
+       - "8000:80"
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_PASSWORD: wordpress
+volumes:
+    db_data:
+    wp_data:
+```
+- 실행하기
+```docker-compose up```
+- 복잡한 명령어로 하는것 보다 가독성 증가가 눈에 띈다
