@@ -183,7 +183,53 @@ docker rm -v $(docker ps -a -q -f status=exited)
 ```docker exec [OPTIONS] CONTAINER COMMAND [ARG...]```
 
 ## 컨테이너 업데이트
+- 새로운 버전의 컨테이너로 업데이트 하는 과정
+   1. 새 버전의 이미지를 다운(pull)
+   2. 기존 컨테이너를 삭제(stop, rm)
+   3. 새 이미지를 기반으로 새 컨테이너 실행(run)
+- 주의사항
+   - 컨테이너를 삭제한다는 건 컨테이너에서 생성된 파일이 사라진다는 뜻
+   - 데이터베이스라면 그동안 쌓였던 데이터, 웹어플리케이션이었다면 그동안 사용자가 업로드한 이미지가 모두 사라짐
+   - 이 상황을 방지하기 위해 **반드시** 내부가 아닌 외부 스토리지에 저장해야 한다.
+   - 가장 좋은 방법은 S3 와 같은 클라우드 서비스에 저장하는 것
+   - 그렇지않으면 데이터 볼륨을 컨테이너에 추가해서 사용 해야한다.
+   - run 명령어 중 -v를 사용하면 된다.
+   ```
+   # before
+   docker run -d -p 3306:3306 \
+     -e MYSQL_ALLOW_EMPTY_PASSWORD=true \
+     --name mysql \
+     mysql:5.7
 
+   # after
+   docker run -d -p 3306:3306 \
+     -e MYSQL_ALLOW_EMPTY_PASSWORD=true \
+     --name mysql \
+     -v /my/own/datadir:/var/lib/mysql \ # <- volume mount
+     mysql:5.7
+   ```
+   - MySQL의 경우 ```/var/lib/mysql``` 디렉토리에 모든 데이터베이스 정보가 담김
+      - ```호스트의 /my/own/datadir```와 ```컨테이너의 /var/lib/mysql``` 를 연결
+   - Jenkins의 경우를 확인해볼것
+      - ```/var/jenkins_home```으로 되어있다.
+      - 이 부분과 호스트의 어떤 폴더를 연결한다고 가정했을때
+      - 다른 인스턴스에서 저 폴더만 가지고 되는지 확인해보면 백업이 되는지 알수 있다.
+      - Jenkins 안에서는 docker를 사용하기 위해서는
+         - docker가 설치 되어있어야 함
+         - ```- /var/run/docker.sock:/var/run/docker.sock```가 같이 명세되어야 함
+            - [https://blog.dasomoli.org/tag/var-run-docker-sock/] 참고
+         - ```/var/run/docker.sock```은 어떤파일인가?
+            - docker daemon에게 명령을 내릴수 있는 인터페이스파일
+            - Docker client가 /var/run/docker.sock를 통해 daemon(Docker serve)에게 명령어를 전달하는것
+            - 외부의 Docker client도 저 파일에 접근할수 있다면 해당 Docker에 명령을 내릴수 있는것
+            - 결국 ```/var/run/docker.sock```만 공유하면 Local에 설치된 Docker를 컨테이너 내부에서 사용가능
+            - 또한 컨테이너 내부에 설치된 docker를 다른 컨테이너 내부에서 사용이 가능
+            - [https://medium.com/dtevangelist/docker-in-docker-fb54252e3188] 참고
+            - 따라서 로컬 Docker와 컨테이너 내부의 /var/run/docker.sock 를 공유한다는것은
+               - 컨테이너 내부에서 명령어를 치면 로컬에서 친것과 동일한 결과를 전달함
+               - 로컬 PC의 ```docker ps```와 동일
+
+ 
 ## Docker Compose
 
 
