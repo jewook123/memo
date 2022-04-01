@@ -53,7 +53,9 @@ Server:
 | –rm | 프로세스 종료시 컨테이너 자동 제거 |
 | -it | -i와 -t를 동시에 사용한 것으로 터미널 입력을 위한 옵션 |
 | –link | 컨테이너 연결 [컨테이너명:별칭] |
-   
+| –w | WORKDIR 설정을 덮어쓰기 위해 사용 |
+- https://www.daleseo.com/docker-run/ 참조
+      
 ### 우분투 설치하기
 ```docker run ubuntu:16.04```
 - proxy 때문에 설치가 안될수 있음
