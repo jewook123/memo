@@ -35,9 +35,10 @@ Server:
 ```
 - server쪽이 정상적으로 되지 않았다면 sudo 권한을 주고 껏킷(or 로그아웃) 해볼것
 - docker는 client와 server가 나뉘어짐
-  - 실제로 외부와의 통신은 server가 하게 된다. 따라서 proxy 설정을 해주려면 저기에다가 해줘야지 외부와 통신이 가능해진다.
-  https://subicura.com/assets/article_images/2017-01-19-docker-guide-for-beginners-2/docker-host.png
-  - 하지만 그 output을 client가 넘겨서 출력하기 때문에 사용자는 바로 명령을 내리는 느낌을 받게됨
+  - 실제로 외부와의 통신은 server(그림에서 daemon으로 표시)가 하게 된다. 
+  - 따라서 proxy 설정을 해주려면 저기에다가 해줘야지 외부와 통신이 가능해진다.
+  ![도커 구조](https://subicura.com/assets/article_images/2017-01-19-docker-guide-for-beginners-2/docker-host.png)
+  - 사용자는 server의 output을 client가 넘겨받아 출력되기 때문에 바로 명령을 내리는 느낌을 받게됨
 
 ### 실행하기
 ```docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]```
