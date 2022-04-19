@@ -129,6 +129,7 @@ docker run -d -p 8080:80 \
 ```docker ps [OPTIONS]```
 - 옵션
    - -a : stop한 것까지 보인다.
+   - --no-trunc : command 모두 보기
 ```
 **Tip)**
 컨테이너는 종료되어도 삭제되지 않고 남아있음
