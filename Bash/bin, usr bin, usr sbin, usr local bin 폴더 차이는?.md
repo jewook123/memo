@@ -28,3 +28,17 @@ echo $PATH
 /sbin
 /bin
 ```
+
+### 설치시
+```
+sudo curl -o /usr/local/bin/kubectl  \
+   https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
+```
+```
+cURL ref.
+https://www.crocus.co.kr/1736
+-o --output <file>
+https://kibua20.tistory.com/148
+```
+
+
