@@ -44,7 +44,8 @@ https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /
 - Docker 설치
 ```
 $ sudo apt-get update
-$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io // 16.01
+$ sudo apt-get install docker.io // 20
 ```
 - Docker 버전 확인
 ```
