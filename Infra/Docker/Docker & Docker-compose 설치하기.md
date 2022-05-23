@@ -88,3 +88,10 @@ $ sudo usermod -aG docker $USER
     - https://subicura.com/k8s/2021/01/02/docker-hub-pull-limit/
   - 해결책은 개인계정을 사용하면 ```계정당 200회 / 6시간```로 사용할 수 있다.
   - ```docker login -u [ID]```    
+### docker-compose 설치
+```
+curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+# test
+docker-compose version
+```
