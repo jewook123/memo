@@ -91,8 +91,13 @@ $ sudo usermod -aG docker $USER
   - ```docker login -u [ID]```    
 ### docker-compose 설치
 ```
-curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+// 16
+curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-composep-docker 
 chmod +x /usr/local/bin/docker-compose
+
+// 20
+sudo apt install docker-compose
+
 # test
 docker-compose version
 ```
