@@ -154,7 +154,7 @@ https://wrkbr.tistory.com/291
 ## 예제로 알아보기
 
 ```bash
-(input stream) | **sed -e "s#\S*:##g" -e "s#\s\+#\n#g”**
+(input stream) | sed -e "s#\S*:##g" -e "s#\s\+#\n#g”
 ```
 
 - e : execute 하는 스크립트 , 보통 두개이상의 표현식을 사용할때 사용
