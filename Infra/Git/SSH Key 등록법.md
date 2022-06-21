@@ -36,7 +36,10 @@ ssh-keygen
 ## GITHUB에 등록하기
 github의 profile에 진입해 SSH Keys라고 하는 메뉴를 통해 위 keygen으로 만들어진 ~.pub ( 공개키 )를 복사 붙여넣기 하면 등록 완료된다.
 
-
 https://www.lainyzine.com/ko/article/creating-ssh-key-for-github/
 
+---------------------------------------
+220621 업데이트
+```
 Github Enterprise의 경우, https 통신이 안되는 경우가 있기때문에 ssh로 시도할 것
+```
