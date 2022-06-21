@@ -21,6 +21,7 @@ SSH는 Secure Shell 이라고도 부르며 멀리 떨어져있지만 네트워�
 이런 과정으로 사용이 된다는 걸 인식하고 key들을 만들어보자.
 
 ## SSH 공개키, 개인키 만들기
+- 홈에서 실행
 ```
 cd ~/.ssh
 ```
@@ -37,3 +38,5 @@ github의 profile에 진입해 SSH Keys라고 하는 메뉴를 통해 위 keygen
 
 
 https://www.lainyzine.com/ko/article/creating-ssh-key-for-github/
+
+Github Enterprise의 경우, https 통신이 안되는 경우가 있기때문에 ssh로 시도할 것
