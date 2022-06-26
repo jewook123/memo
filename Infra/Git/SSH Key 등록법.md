@@ -41,5 +41,5 @@ https://www.lainyzine.com/ko/article/creating-ssh-key-for-github/
 ---------------------------------------
 220621 업데이트
 ```
-Github Enterprise의 경우, https 통신이 안되는 경우가 있기때문에 ssh로 시도할 것
+git clone을 Github Enterprise에서 할 경우, https 통신이 안되는 경우가 있기때문에 ssh로 시도할 것
 ```
