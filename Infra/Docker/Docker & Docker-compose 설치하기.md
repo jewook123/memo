@@ -36,22 +36,24 @@
 
 ### Docker 설치
 
-- Docker repository 등록   
+- Docker repository 등록 (필수)   
 ``` 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
 https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null 
 ```
-- Docker 설치
+- Docker 설치 (필수)
 ```
 $ sudo apt-get update
-$ sudo apt-get install docker-ce docker-ce-cli containerd.io // 16.01
-$ sudo apt-get install docker.io // 20
+아래 둘중 택 1
+$ sudo apt-get install docker.io // version 20
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io // version 16
+
 ```
-- Docker 버전 확인
+- Docker 버전 확인 (필수)
 ```
 $ sudo docker version
 ```
-- Docker 사용자 그룹 추가
+- Docker 사용자 그룹 추가 (필수)
   - usermod : 사용자 속성을 변경하는 명령어
   - -G (—groups) : 새로운 그룹을 말한다.
   - -a (—append) : 다른 그룹에서 삭제 없이 G 옵션에 따른 그룹에 사용자를 추가한다.
