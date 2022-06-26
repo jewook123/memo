@@ -61,7 +61,7 @@ $ sudo docker version
 $ sudo usermod -aG docker $USER
 ```
 ### 에러 대응 
-- ```docker version```시 Server쪽 에러로그가 뜬다면
+- ```sudo docker version```시 Server쪽 에러로그가 뜬다면
   - 위 그룹 추가 후 로그아웃 후 다시 진행
 
 - proxy 설정 오류가 뜬다면
