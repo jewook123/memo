@@ -27,16 +27,16 @@ fi
 
 if [ "$1" == "api" ]; then
     SERVICE="service-api"
-    CONTEXT="api"
+    CONTEXT="instantplay-api-us2"
 elif [ "$1" == "aapi" ]; then
     SERVICE="service-admin-api"
-    CONTEXT="api"
+    CONTEXT="instantplay-api-us2"
 elif [ "$1" == "admin" ]; then
     SERVICE="service-admin"
-    CONTEXT="api"
+    CONTEXT="instantplay-api-us2"
 elif [ "$1" == "rm" ]; then
     SERVICE="resource-manager"
-    CONTEXT="rm"
+    CONTEXT="instantplay-rm-va"
 fi
 
 TARGET=$2
